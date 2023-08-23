@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download Attachments</title>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  </head>
+  <body>
+    <button id="downloadBtn">Download All Attachments</button>
+
+    <script>
+      const t = TrelloPowerUp.iframe();
+
+      document
+        .getElementById("downloadBtn")
+        .addEventListener("click", function () {
+          t.card("attachments")
+            .get("attachments")
+            .then(function (attachments) {
+              attachments.forEach((attachment) => {
+                const a = document.createElement("a");
+                a.href = attachment.url;
+                a.download = attachment.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              });
+            });
+        });
+    </script>
+  </body>
+</html>
